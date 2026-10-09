@@ -26,22 +26,28 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4">
         {/* Top Navbar */}
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-bold text-bazar-green">🛒 বাজার দর</span>
-            <span className="text-sm text-gray-500 hidden sm:inline-block">মঙ্গলবার, ৬ অক্টোবর, ২০২৬</span>
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-bazar-green rounded-xl flex items-center justify-center p-1.5 sm:p-2 shrink-0">
+              <img src="/logo-icon.png" alt="Bazar Dor Logo" className="w-full h-full object-contain" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">বাজার দর</span>
+              <span className="text-xs sm:text-sm text-gray-600 hidden sm:block">মঙ্গলবার, ৬ অক্টোবর, ২০২৬</span>
+            </div>
           </Link>
           
           <div className="flex gap-4 items-center">
             {session ? (
                <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar border border-gray-200">
-                    <div className="w-10 rounded-full flex items-center justify-center bg-gray-100 text-gray-600">
+                  <div tabIndex={0} role="button" className="btn btn-ghost rounded-full border border-gray-200 px-3 flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center bg-gray-100 text-gray-600 overflow-hidden shrink-0">
                       {session.user.image ? (
-                         <img src={session.user.image} alt="User" />
+                         <img src={session.user.image} alt="User" className="w-full h-full object-cover" />
                       ) : (
-                         <span className="text-lg font-bold">{session.user.name?.charAt(0).toUpperCase()}</span>
+                         <span className="text-sm font-bold">{session.user.name?.charAt(0).toUpperCase()}</span>
                       )}
                     </div>
+                    <span className="text-sm font-medium">{session.user.name}</span>
                   </div>
                   <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-gray-100">
                     <li><Link href="/profile">প্রোফাইল আপডেট</Link></li>
