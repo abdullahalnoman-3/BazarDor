@@ -1,69 +1,107 @@
 import Image from "next/image";
+import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
 
-export default function Home() {
+// export const instant = false;
+
+export default async function Home() {
+  // Fetch data from API
+  let products = [];
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, { cache: 'no-store' });
+    if (res.ok) {
+      products = await res.json();
+    }
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+  }
+
+  // Filter top risers (Section A)
+  const topRisers = [...products]
+    .filter(p => p.change.dir === "up")
+    .sort((a, b) => b.change.pct - a.change.pct)
+    .slice(0, 6);
+
+  // Filter top fallers (Section B)
+  const topFallers = [...products]
+    .filter(p => p.change.dir === "down")
+    .sort((a, b) => b.change.pct - a.change.pct)
+    .slice(0, 6);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      {/* Hero Section */}
+      <section className="flex flex-col md:flex-row items-center justify-between gap-8 py-10">
+        <div className="flex-1 text-center md:text-left">
+          <p className="text-sm font-semibold text-bazar-green bg-green-100 inline-block px-3 py-1 rounded-full mb-4">
+            মঙ্গলবার, ৬ অক্টোবর, ২০২৬
           </p>
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">
+            আজকের বাজারের দাম এক নজরে
+          </h1>
+          <p className="text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
+            চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়, সর্বনিম্ন-সর্বোচ্চ এবং দামের পরিবর্তন এক জায়গায়।
+          </p>
+          <Link href="#সব-পণ্য" className="btn btn-solid bg-bazar-green hover:bg-[#096931] text-white rounded-md px-8">
+            সব পণ্য দেখুন
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="flex-1 flex justify-center md:justify-end">
+          <Image
+            src="/bazar-hero.png"
+            alt="Bazar Dor Hero"
+            width={400}
+            height={300}
+            className="w-full max-w-sm"
+          />
         </div>
-      </main>
+      </section>
+      
+      {/* Section A — “আজ দাম বেড়েছে ▲” */}
+      {topRisers.length > 0 && (
+        <div className="mt-12">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-bazar-red text-xl">▲</span>
+            <h2 className="text-xl font-bold">আজ দাম বেড়েছে</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {topRisers.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Section B — “আজ দাম কমেছে ▼” */}
+      {topFallers.length > 0 && (
+        <div className="mt-12">
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-bazar-green text-xl">▼</span>
+            <h2 className="text-xl font-bold">আজ দাম কমেছে</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {topFallers.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Section C — “সব পণ্য” */}
+      <div id="সব-পণ্য" className="mt-16">
+        <h2 className="text-xl font-bold mb-2">সব পণ্য</h2>
+        <p className="text-gray-500 mb-6 text-sm">ভাই এখানে সব দাম দেওয়া আছে</p>
+        
+        {products.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {products.map((product: any) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500 py-8 text-center border rounded-lg bg-gray-50">কোনো পণ্য পাওয়া যায়নি</p>
+        )}
+      </div>
     </div>
   );
 }
