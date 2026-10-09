@@ -49,10 +49,26 @@ export default function Navbar() {
                     </div>
                     <span className="text-sm font-medium">{session.user.name}</span>
                   </div>
-                  <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-gray-100">
-                    <li><Link href="/profile">প্রোফাইল আপডেট</Link></li>
-                    <li><button onClick={handleSignOut} className="text-red-500">লগআউট</button></li>
-                  </ul>
+                  <div tabIndex={0} className="mt-3 z-[100] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.1)] dropdown-content bg-white rounded-2xl w-64 border border-gray-100">
+                    <div className="mb-3 px-2">
+                      <p className="font-bold text-gray-900">{session.user.name}</p>
+                      <p className="text-sm text-gray-500">{session.user.email}</p>
+                    </div>
+                    <ul className="flex flex-col">
+                      <li>
+                        <Link href="/profile" className="flex items-center gap-3 py-2.5 px-2 hover:bg-gray-50 rounded-lg text-gray-700 transition-colors">
+                          <span className="text-lg text-blue-500">👤</span>
+                          <span className="font-medium text-[15px]">আমার প্রোফাইল</span>
+                        </Link>
+                      </li>
+                      <li>
+                        <button onClick={handleSignOut} className="flex items-center gap-3 py-2.5 px-2 hover:bg-gray-50 rounded-lg text-[#e53e3e] transition-colors w-full text-left">
+                          <span className="text-lg">↩</span>
+                          <span className="font-medium text-[15px]">সাইন আউট</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
                </div>
             ) : (
                <>

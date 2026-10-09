@@ -64,7 +64,7 @@ export default async function Home() {
             <span className="text-bazar-red text-xl">▲</span>
             <h2 className="text-xl font-bold">আজ দাম বেড়েছে</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
             {topRisers.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -79,7 +79,7 @@ export default async function Home() {
             <span className="text-bazar-green text-xl">▼</span>
             <h2 className="text-xl font-bold">আজ দাম কমেছে</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
             {topFallers.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -93,7 +93,7 @@ export default async function Home() {
         <p className="text-gray-500 mb-6 text-sm">ভাই এখানে সব দাম দেওয়া আছে</p>
         
         {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
             {products.map((product: any) => (
               <ProductCard key={product.id} product={product} />
             ))}
