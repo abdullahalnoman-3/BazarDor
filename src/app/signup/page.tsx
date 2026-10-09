@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signUp } from "@/lib/auth-client";
+import { signUp, signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export default function SignUpPage() {
   };
 
   const handleSocialLogin = async (provider: 'google' | 'github') => {
-      await signUp.social({
+      await signIn.social({
           provider,
           callbackURL: "/"
       });

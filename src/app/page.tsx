@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 
-// export const instant = false;
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   // Fetch data from API
