@@ -5,7 +5,6 @@ import ProductCard from "@/components/ProductCard";
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  // Fetch data from API
   let products = [];
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`, { cache: 'no-store' });
@@ -16,13 +15,11 @@ export default async function Home() {
     console.error("Failed to fetch products:", error);
   }
 
-  // Filter top risers (Section A)
   const topRisers = [...products]
     .filter(p => p.change.dir === "up")
     .sort((a, b) => b.change.pct - a.change.pct)
     .slice(0, 6);
 
-  // Filter top fallers (Section B)
   const topFallers = [...products]
     .filter(p => p.change.dir === "down")
     .sort((a, b) => b.change.pct - a.change.pct)

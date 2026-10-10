@@ -59,7 +59,7 @@ npm install
 ### 3. Environment Variables
 Create a `.env` file in the root of your project and add the following configuration:
 ```env
-NEXT_PUBLIC_API_URL=https://api.api-store.workers.dev/api/bazardor
+NEXT_PUBLIC_API_URL=https://openapi.programming-hero.com/api/bazardor
 DATABASE_URL="file:./dev.db"
 
 # Better Auth Config
